@@ -22,18 +22,6 @@ def open_json_file(filename):
     return dictionary
 
 
-@api.get('r_squared/')
-def get_r_squared(request):
-    dct = open_json_file(generate_filepath('model_info.json'))
-    return dct['r_squared']
-
-
-@api.get('adjusted_r_squared/')
-def get_adjusted_r_squared(request):
-    dct = open_json_file(generate_filepath('model_info.json'))
-    return dct['adjusted_r_squared']
-
-
 @api.get('key/{key}/')
 def get_model_info(request, key):
     dct = open_json_file(generate_filepath('model_info.json'))
@@ -50,9 +38,7 @@ def list_keys(request):
 
 
 @api.get('predict/{distance}/')
-def predict(request, distance: int):
-    import rpy2.robjects as robjects
-    
+def predict(request, distance):
     filepath = generate_filepath('modelr.pickle')
 
     with open(filepath, "rb") as file:
@@ -63,9 +49,26 @@ def predict(request, distance: int):
     max_distance = max(distance_values)
     min_distance = min(distance_values)
     
+    # convert the distance parameter from string to int or float
+    try:
+        if "," in distance:
+            distance = distance.replace(",", ".")
+        if "." in distance:
+            distance = float(distance)
+        else:
+            distance = int(distance)
+    except:
+        return HttpResponse("Either a non numeric value or an invalid numeric"
+                            " format was passed as distance. Use integer values"
+                            " or float values without thousands separator.")
+    
     if distance < min_distance or distance > max_distance:
         return HttpResponse(f"Distance can't be lesser than {min_distance}"
                             f" or greater than {max_distance}")
+    
+    # This import is strangely placed here to avoid as much as possible the rpy2
+    # problem described in https://github.com/rpy2/rpy2/issues/875
+    import rpy2.robjects as robjects
     
     # make prediction
     result = robjects.r.predict(
