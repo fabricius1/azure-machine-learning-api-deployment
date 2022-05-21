@@ -4,6 +4,14 @@
 
 # Table of contents
 
+1. [Project description](#project-description)
+2. [Project structure](#project-structure)
+3. [Implementing an R linear regression model in Python with `rpy2`](#implementing-an-r-linear-regression-model-in-python-with-rpy2)
+4. [Model update X model info](#model-update-x-model-info)
+5. [Installing and running the project](#installing-and-running-the-project)
+6. [List of API routes](#list-of-api-routes)
+7. [Techs used in this project](#techs-used-in-this-project)
+
 # Project description
 
 This project implements a didactic Linear Regression model as an API served by Django. The model has only ten observation, one explanatory variable (`distance`), its dependent/target variable (`time`), and was taken from the following book (which I strongly recommend for those interested in learning more about ML and Statistics in general):
@@ -52,7 +60,7 @@ Although Python has its own OLS model implementations (such as the one in the *s
 
 The code for creating/updating the linear regression model with R's `lm()` function can be found in the `scripts/update_lm.py` file. On the other hand, R's `predict()` function is used in the `lm_app/api.py` file (inside the `predict` Python function, called when the route `http//:localhost:8000/lm/api/predict/{distance}` is accessed).
 
-# Model Update X Model Info
+# Model update X model info
 
 This project was structured so that two distinct processes can work independently: the model creation/update, by one hand; and displaying its information and using its predictive functionality, on the other. 
 
@@ -60,7 +68,7 @@ Such "separation of concerns" is achieved by running the `scripts/update_lm.py` 
 
 So, if a model takes hours or days to be generated or updated, one can do that beforehand, by running the command `python manage.py runscript update_lm`. When this process is done, the resulting two files `model_info.json` and `modelr.pickle` from the models last version will be used by the API when one of its routes is accessed.  
 
-# Installing and Running the Project
+# Installing and running the project
 
 1. Make sure you have both Python and R installed in your machine. I used Python 3.10.2 and R 4.1.2 in this project. Some extra configuration of environmental variables might be necessary due to the *rpy2* module. If that is the case, you can consult [rpy2 oficial documentation](https://rpy2.github.io/doc/latest/html/introduction.html).
 
@@ -82,7 +90,7 @@ So, if a model takes hours or days to be generated or updated, one can do that b
 
 > ```python manage.py runscript update_lm```
 
-# List of API Routes 
+# List of API routes 
 
 1. With the Django server still running, access `http://localhost:8000/lm/api/docs` to check the API Swagger documentation listing all the available routes. You can test them there or access the routes directly.
 
@@ -96,7 +104,7 @@ So, if a model takes hours or days to be generated or updated, one can do that b
 
 4. In the `predict` route, you can pass distances as integers (17, 28 *etc*) or floats with either a dot or a comma as decimal separators (29.4 and 29,4 are both valid). However, only distances between 5 and 32 are allowed to avoid model extrapolation. The reason for that is that we can't garantee that the model would continue behaving in a linear manner below the minimum or above the maximum distance observed in the dataset used to train the model.
 
-# Techs Used in This Tutorial
+# Techs used in this tutorial
 
 * Python 3.10.2
 * R 4.1.12
