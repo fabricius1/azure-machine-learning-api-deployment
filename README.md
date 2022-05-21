@@ -104,7 +104,7 @@ So, if a model takes hours or days to be generated or updated, one can do that b
 
 4. In the `predict` route, you can pass distances as integers (17, 28 *etc*) or floats with either a dot or a comma as decimal separators (29.4 and 29,4 are both valid). However, only distances between 5 and 32 are allowed to avoid model extrapolation. The reason for that is that we can't garantee that the model would continue behaving in a linear manner below the minimum or above the maximum distance observed in the dataset used to train the model.
 
-# Techs used in this tutorial
+# Techs used in this project
 
 * Python 3.10.2
 * R 4.1.12
