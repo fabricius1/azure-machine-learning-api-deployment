@@ -10,7 +10,7 @@
 4. [Model update X model info](#model-update-x-model-info)
 5. [Installing and running the project](#installing-and-running-the-project)
 6. [List of API routes](#list-of-api-routes)
-7. [Possible minor issue after accessing the `predict` route for the first time]()
+7. [Possible minor issue after accessing the `predict` route for the first time](#possible-minor-issue-after-accessing-the-predict-route-for-the-first-time)
 8. [Techs used in this project](#techs-used-in-this-project)
 
 # Project description
