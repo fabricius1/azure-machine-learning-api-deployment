@@ -10,7 +10,8 @@
 4. [Model update X model info](#model-update-x-model-info)
 5. [Installing and running the project](#installing-and-running-the-project)
 6. [List of API routes](#list-of-api-routes)
-7. [Techs used in this project](#techs-used-in-this-project)
+7. [Possible minor issue after accessing the `predict` route for the first time]()
+8. [Techs used in this project](#techs-used-in-this-project)
 
 # Project description
 
@@ -103,6 +104,12 @@ So, if a model takes hours or days to be generated or updated, one can do that b
 > ```http://localhost:8000/lm/api/predict/29.5```
 
 4. In the `predict` route, you can pass distances as integers (17 or 28, for example) or floats with either a dot or a comma as decimal separators (either 29.4 or 29,4 would be valid options). However, only distances between 5 and 32 are allowed to avoid model extrapolation. The reason for that is that we can't garantee that the model would continue behaving in a linear manner below the minimum or above the maximum distance observed in the dataset used to train the model.
+
+# Possible minor issue after accessing the `predict` route for the first time
+
+When the `predict` API route makes a successful prediction, the terminal running Django will keep running. However, one will not be able to stop it from running with CTRL + C anymore. This is an issue already identified in the *rpy2* module (more information in https://github.com/rpy2/rpy2/issues/875).
+
+If you run into this problem, close the terminal tab and open a new one.
 
 # Techs used in this project
 
