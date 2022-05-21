@@ -1,0 +1,5 @@
+.myenv
+*.ipynb
+.ipynb_checkpoints
+__pycache__
+*.sqlite3
