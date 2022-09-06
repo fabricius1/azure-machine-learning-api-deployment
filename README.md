@@ -5,14 +5,12 @@
 ## Table of contents
 
 1. [Project description](#project-description)
-2. [Installations needed](#installations-needed)
-3. [Project structure](#project-structure)
+2. [Required installations and signatures to run this project](#required-installations-and-signatures-to-run-this-project)
+3. [How to run the project](#how-to-run-the-project)
 4. [Implementing an R linear regression model in Python with `rpy2`](#implementing-an-r-linear-regression-model-in-python-with-rpy2)
 5. [Model update X model info](#model-update-x-model-info)
-6. [Installing and running the project](#installing-and-running-the-project)
-7. [List of API routes](#list-of-api-routes)
-8. [Possible minor issue after accessing the `predict` route for the first time](#possible-minor-issue-after-accessing-the-predict-route-for-the-first-time)
-9. [Techs used in this project](#techs-used-in-this-project)
+6. [Project structure](#project-structure)
+7. [Technologies used in this project](#technologies-used-in-this-project)
 
 ## Project description
 
@@ -34,7 +32,7 @@ By analyzing how this simplified ML model API was implemented with Django Ninja,
 ## How to run the project
 ```shell
 # Clone this repository
-git clone 
+git clone https://github.com/fabricius1/azure-machine-learning-api-deployment.git
 
 # Create a Python virtual environment with venv
 python3 -m venv .myenv
