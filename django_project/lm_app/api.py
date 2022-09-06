@@ -5,8 +5,7 @@ import json
 import os
 
 
-api = NinjaAPI()
-
+api = NinjaAPI(csrf=True)
 
 def generate_filepath(filename):
     return os.path.join(
@@ -21,8 +20,18 @@ def open_json_file(filename):
     
     return dictionary
 
+@api.get('list_keys/',
+         tags = ['Start Here'],
+         summary = ('Select one of these keys to use on '
+                    'the /model_data/{key}/ route below'))
+def list_keys(request):
+    dct = open_json_file(generate_filepath('model_info.json'))
+    return sorted(list(dct.keys()))
 
-@api.get('key/{key}/')
+
+@api.get('model_data/{key}/',
+         tags = ['Model Endpoints'],
+         summary='Get info about the model by inserting the corresponding key')
 def get_model_info(request, key):
     dct = open_json_file(generate_filepath('model_info.json'))
     if key not in dct:
@@ -31,40 +40,37 @@ def get_model_info(request, key):
     return dct[key]
 
 
-@api.get('list_keys/')
-def list_keys(request):
-    dct = open_json_file(generate_filepath('model_info.json'))
-    return sorted(list(dct.keys()))
 
 
-@api.get('predict/{distance}/')
-def predict(request, distance):
+@api.get('predict/{weight}/',
+         tags = ['Model Endpoints'])
+def predict(request, weight):
     filepath = generate_filepath('modelr.pickle')
 
     with open(filepath, "rb") as file:
         modelr = pickle.load(file)
         
     # check if prediction doesn't extrapolate the model limits
-    distance_values = modelr[-1][1]
-    max_distance = max(distance_values)
-    min_distance = min(distance_values)
+    weight_values = modelr[-1][1]
+    max_weight = max(weight_values)
+    min_weight = min(weight_values)
     
-    # convert the distance parameter from string to int or float
+    # convert the weight parameter from string to int or float
     try:
-        if "," in distance:
-            distance = distance.replace(",", ".")
-        if "." in distance:
-            distance = float(distance)
+        if "," in weight:
+            weight = weight.replace(",", ".")
+        if "." in weight:
+            weight = float(weight)
         else:
-            distance = int(distance)
+            weight = int(weight)
     except:
         return HttpResponse("Either a non numeric value or an invalid numeric"
-                            " format was passed as distance. Use integer values"
+                            " format was passed as weight. Use integer values"
                             " or float values without thousands separator.")
     
-    if distance < min_distance or distance > max_distance:
-        return HttpResponse(f"Distance can't be lesser than {min_distance}"
-                            f" or greater than {max_distance}")
+    if weight < min_weight or weight > max_weight:
+        return HttpResponse(f"Weight can't be lesser than {min_weight}"
+                            f" or greater than {max_weight}")
     
     # This import is strangely placed here to avoid as much as possible the rpy2
     # problem described in https://github.com/rpy2/rpy2/issues/875
@@ -73,7 +79,7 @@ def predict(request, distance):
     # make prediction
     result = robjects.r.predict(
         modelr,
-        robjects.DataFrame({"distance":distance})
+        robjects.DataFrame({"weight":weight})
     )
     
     return HttpResponse(round(result[0], 6))

@@ -1,5 +1,11 @@
+.env
 .myenv
 *.ipynb
 .ipynb_checkpoints
+*.pyc
 __pycache__
 *.sqlite3
+*.tf
+*tfstate*
+.terraform
+.terraform.lock*

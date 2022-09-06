@@ -10,11 +10,11 @@ def run():
 
     # create R dataframe
     path = os.path.join("lm_app","extra_files")
-    csv_file = os.path.join(path, "timedistance.csv")
+    csv_file = os.path.join(path, "data.csv")
     data = ro.r["read.table"](csv_file, sep=",", header=True)
 
     # formula as Python string
-    formula_as_py_str = "time ~ distance"
+    formula_as_py_str = "height ~ weight"
 
     # generate linear model
     modelr = ro.r.lm(ro.Formula(formula_as_py_str), data)
@@ -36,7 +36,7 @@ def run():
 
     # add intercept and coeficient
     dct["intercept"] = round(modelr[0][0], decimal_places)
-    dct["coef_distance"] = round(modelr[0][1], decimal_places)
+    dct["coef"] = round(modelr[0][1], decimal_places)
 
     # add residuals
     dct["residuals"] = [round(x, decimal_places) for x in list(modelr[1])]
@@ -45,18 +45,18 @@ def run():
     dct["fitted_values"] = [round(x, decimal_places) for x in list(modelr[4])]
 
     # add time and distance variables in the dictionary as lists
-    dct["time_values"] = [x for x in list(modelr[-1][0])]
-    dct["distance_values"] = [x for x in list(modelr[-1][1])]
+    dct["height_values"] = [x for x in list(modelr[-1][0])]
+    dct["weight_values"] = [x for x in list(modelr[-1][1])]
 
     # add observations from dataframe as Python list of lists
-    dct["observations"] = [list(x) for x in zip(dct["time_values"], dct["distance_values"])]
+    dct["observations"] = [list(x) for x in zip(dct["height_values"], dct["weight_values"])]
 
     # add r squared statistics 
     dct["r_squared"] = round(summary_object[7][0], decimal_places)
     dct["adjusted_r_squared"] = round(summary_object[8][0], decimal_places)
     
     # add equation:
-    dct["equation"] = f'{dct["intercept"]} + {dct["coef_distance"]} * distance'
+    dct["equation"] = f'{dct["intercept"]} + {dct["coef"]} * weight'
 
     # create a json file with the model info dictionary
     json_file = os.path.join(path, "model_info.json")
