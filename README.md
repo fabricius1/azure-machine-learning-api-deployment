@@ -49,10 +49,6 @@ python3 contrib/setup_env_file.py
 # Run this command to create the main.tf terraform file
 python3 contrib/setup_terraform_file.py
 
-# Run this command to check the api locally on your computer
-# (on your browser, go to http://localhost:8000)
-python3 django_project/manage.py runserver
-
 # Build the Docker image
 docker build -t <DOCKER_USERNAME>/<DOCKER_IMAGE_NAME> .
 
