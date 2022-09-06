@@ -1,4 +1,4 @@
-<h1 align="center">Deploy a Dockerized Machine Learning API to Azure App Service using Django Ninja and Terraform</h1>
+<h1 align="center">Deploy a Machine Learning API to Azure App Service using Docker, Terraform, and Django Ninja</h1>
 
 <br />
 
@@ -46,7 +46,7 @@ pip install -r requirements.txt
 # Run this command to create the .env file
 python3 contrib/setup_env_file.py
 
-# Run this command to create the main.tf terraform file
+# Run this command to create the main.tf Terraform file
 python3 contrib/setup_terraform_file.py
 
 # Build the Docker image
@@ -64,7 +64,7 @@ az login
 # Initialize Terraform
 terraform init
 
-# Run this terraform command (An error will be raised):
+# Run this Terraform command (An error will be raised):
 terraform plan
 
 # The error happened because the docker_image string in main.tf is empty.
