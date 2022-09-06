@@ -46,7 +46,7 @@ CSRF_TRUSTED_ORIGINS = [
     f'http://{config("AZURE_WEB_APP_NAME")}.azurewebsites.net',
 ]
 
-ROOT_URLCONF = 'ml_api.urls'
+ROOT_URLCONF = 'entrypoint_files.urls'
 
 TEMPLATES = [
     {
@@ -64,7 +64,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ml_api.wsgi.application'
+WSGI_APPLICATION = 'entrypoint_files.wsgi.application'
 
 
 # Database

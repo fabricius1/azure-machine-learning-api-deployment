@@ -9,7 +9,7 @@ def run():
     decimal_places = 6
 
     # create R dataframe
-    path = os.path.join("lm_app","extra_files")
+    path = os.path.join("django_project", "lm_app","extra_files")
     csv_file = os.path.join(path, "data.csv")
     data = ro.r["read.table"](csv_file, sep=",", header=True)
 
@@ -44,7 +44,7 @@ def run():
     # add fitted_values
     dct["fitted_values"] = [round(x, decimal_places) for x in list(modelr[4])]
 
-    # add time and distance variables in the dictionary as lists
+    # add height and weight variables in the dictionary as lists
     dct["height_values"] = [x for x in list(modelr[-1][0])]
     dct["weight_values"] = [x for x in list(modelr[-1][1])]
 
